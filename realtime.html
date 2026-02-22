@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Routx - Real-Time Data</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <div class="logo">Routx</div>
+        <ul>
+            <li><a href="index.html">Dashboard</a></li>
+            <li><a href="realtime.html" class="active">Real-Time Data</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <header>
+            <h1>Real-Time Bin Status</h1>
+            <p>Live updates from all connected smart bins.</p>
+        </header>
+
+        <section class="table-section">
+            <table id="bin-table">
+                <thead>
+                    <tr>
+                        <th>Bin ID</th>
+                        <th>Fill %</th>
+                        <th>Status</th>
+                        <th>Last Updated</th>
+                    </tr>
+                </thead>
+                <tbody id="bin-data">
+                    <!-- Data will be populated by JavaScript -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script type="module" src="script.js"></script>
+</body>
+</html>

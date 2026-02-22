@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Routx - Dashboard</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <div class="logo">Routx</div>
+        <ul>
+            <li><a href="index.html" class="active">Dashboard</a></li>
+            <li><a href="realtime.html">Real-Time Data</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <header>
+            <h1>Routx</h1>
+            <div class="stats-container">
+                <div class="stat-card">
+                    <h3>Total Bins</h3>
+                    <p id="total-bins">20</p>
+                </div>
+                <div class="stat-card danger">
+                    <h3>Full Bins</h3>
+                    <p id="full-bins">0</p>
+                </div>
+                <div class="stat-card warning">
+                    <h3>Medium Bins</h3>
+                    <p id="medium-bins">0</p>
+                </div>
+                <div class="stat-card success">
+                    <h3>Low Bins</h3>
+                    <p id="low-bins">0</p>
+                </div>
+            </div>
+        </header>
+
+        <section class="map-section">
+            <div id="map"></div>
+            <div class="controls">
+                <button id="generate-route" class="btn-primary">Generate Optimized Route</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script type="module" src="script.js"></script>
+</body>
+</html>
