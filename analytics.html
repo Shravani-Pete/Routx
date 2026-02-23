@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RouteX - Advanced Analytics</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <!-- Chart.js for beautiful graphs -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <nav>
+        <div class="logo">RouteX</div>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="monitoring.html">Monitoring</a></li>
+            <li><a href="analytics.html" class="active">Analytics</a></li>
+            <li><a href="realtime.html">Real-Time Data</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <header>
+            <h1>📊 City-Wide Analytics & Optimization</h1>
+            <p style="color: var(--text-secondary); margin-bottom: 2rem;">Predictive insights and real-time route
+                optimization for Amravati City.</p>
+        </header>
+
+        <!-- Stats Bar -->
+        <div class="stats-container">
+            <div class="stat-card">
+                <h3>Total Bins</h3>
+                <p id="total-bins">--</p>
+            </div>
+            <div class="stat-card danger">
+                <h3>Critical (Full)</h3>
+                <p id="full-bins">--</p>
+            </div>
+            <div class="stat-card warning">
+                <h3>Warning (Med)</h3>
+                <p id="medium-bins">--</p>
+            </div>
+            <div class="stat-card success">
+                <h3>Operational (Low)</h3>
+                <p id="low-bins">--</p>
+            </div>
+        </div>
+
+        <!-- Analytics Grid -->
+        <div class="analytics-grid">
+            <!-- Fill Level Distribution -->
+            <div class="chart-card">
+                <h3>Fill Level Distribution</h3>
+                <div class="chart-container">
+                    <canvas id="fillLevelChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Daily Waste Generation -->
+            <div class="chart-card">
+                <h3>Daily Waste Generation (Weekly)</h3>
+                <div class="chart-container">
+                    <canvas id="wasteGenChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Predicted Overflow Bins (Centered via span) -->
+            <div class="chart-card" style="grid-column: 1 / -1; max-width: 800px; margin: 0 auto; width: 100%;">
+                <h3>Upcoming Overflow Predictions</h3>
+                <div style="margin-top: 1rem; flex: 1; overflow-y: auto;">
+                    <div
+                        style="padding: 1rem; background: rgba(239, 68, 68, 0.1); border-left: 4px solid var(--danger); border-radius: 4px; margin-bottom: 1rem;">
+                        <strong style="color: var(--danger);">RX-0042 (Sector 7)</strong>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary);">Predicted overflow in 45 minutes
+                        </p>
+                    </div>
+                    <div
+                        style="padding: 1rem; background: rgba(245, 158, 11, 0.1); border-left: 4px solid var(--warning); border-radius: 4px; margin-bottom: 1rem;">
+                        <strong style="color: var(--warning);">RX-0128 (Rajapeth)</strong>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary);">Predicted overflow in 2 hours</p>
+                    </div>
+                    <div
+                        style="padding: 1rem; background: rgba(245, 158, 11, 0.1); border-left: 4px solid var(--warning); border-radius: 4px; margin-bottom: 1rem;">
+                        <strong style="color: var(--warning);">RX-0089 (Gadge Nagar)</strong>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary);">Predicted overflow in 3.5 hours</p>
+                    </div>
+                    <div
+                        style="padding: 1rem; background: rgba(245, 158, 11, 0.1); border-left: 4px solid var(--warning); border-radius: 4px;">
+                        <strong style="color: var(--warning);">RX-0215 (Badnera Rd)</strong>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary);">Predicted overflow in 5 hours</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div>RouteX © 2026</div>
+            <div style="color: var(--accent); font-weight: 600;">HackGenX 2026 Project</div>
+            <div>Team RouteX</div>
+        </div>
+    </footer>
+
+    <script>
+        // Set global Chart.js defaults for dark theme
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Fill Level Distribution Chart (Doughnut)
+            const fillCtx = document.getElementById('fillLevelChart').getContext('2d');
+            new Chart(fillCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Critical (>75%)', 'Medium (50-75%)', 'Low (<50%)'],
+                    datasets: [{
+                        data: [5, 8, 7],
+                        backgroundColor: ['#ef4444', '#f59e0b', '#22c55e'],
+                        borderWidth: 0,
+                        hoverOffset: 10
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom' }
+                    }
+                }
+            });
+
+            // Daily Waste Generation (Line Chart)
+            const wasteCtx = document.getElementById('wasteGenChart').getContext('2d');
+            new Chart(wasteCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        label: 'Waste Collected (Tons)',
+                        data: [12, 19, 15, 22, 18, 25, 14],
+                        borderColor: '#22c55e',
+                        backgroundColor: 'rgba(34, 197, 94, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { beginAtZero: true }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+        });
+    </script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

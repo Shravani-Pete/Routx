@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Routx - Real-Time Data</title>
+    <title>RouteX - Real-Time Bin Status</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
+
 <body>
     <nav>
-        <div class="logo">Routx</div>
+        <div class="logo">RouteX</div>
         <ul>
-            <li><a href="index.html">Dashboard</a></li>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="monitoring.html">Monitoring</a></li>
+            <li><a href="analytics.html">Analytics</a></li>
             <li><a href="realtime.html" class="active">Real-Time Data</a></li>
         </ul>
     </nav>
@@ -18,7 +23,8 @@
     <main>
         <header>
             <h1>Real-Time Bin Status</h1>
-            <p>Live updates from all connected smart bins.</p>
+            <p style="color: var(--text-secondary); margin-bottom: 2rem;">Live updates from all connected smart bins
+                through ultrasonic IoT sensors.</p>
         </header>
 
         <section class="table-section">
@@ -38,7 +44,17 @@
         </section>
     </main>
 
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div>RouteX © 2026</div>
+            <div style="color: var(--accent); font-weight: 600;">HackGenX 2026 Project</div>
+            <div>Team RouteX</div>
+        </div>
+    </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script type="module" src="script.js"></script>
+    <script src="script.js"></script>
 </body>
+
 </html>
