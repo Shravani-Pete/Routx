@@ -1,0 +1,8 @@
+virtualEnv/
+__pycache__/
+*.pyc
+instance/
+.env
+.vscode/
+.idea/
+*.db
