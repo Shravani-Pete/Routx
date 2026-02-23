@@ -107,6 +107,56 @@ function updateStats() {
     if (document.getElementById('avg-fill')) document.getElementById('avg-fill').innerText = avgFill + '%';
     if (document.getElementById('active-trucks')) document.getElementById('active-trucks').innerText = '12';
     if (document.getElementById('next-overflow')) document.getElementById('next-overflow').innerText = '2.5 Hours';
+
+    // Update Analytics Charts if they exist
+    if (typeof fillLevelChart !== 'undefined' && fillLevelChart !== null) {
+        fillLevelChart.data.datasets[0].data = [critical, medium, low];
+        fillLevelChart.update();
+    }
+
+    updatePredictions();
+}
+
+function updatePredictions() {
+    const container = document.getElementById('predictions-container');
+    if (!container) return;
+
+    // Find and sort bins that are filling up quickly (prediction is in hours)
+    const sortedBins = [...bins]
+        .sort((a, b) => {
+            // Let's sort dynamically: higher fill + lower prediction time = higher urgency
+            const urgencyA = a.fill / Math.max(a.prediction, 1);
+            const urgencyB = b.fill / Math.max(b.prediction, 1);
+            return urgencyB - urgencyA;
+        })
+        .slice(0, 4);
+
+    container.innerHTML = '';
+
+    if (sortedBins.length === 0) {
+        container.innerHTML = '<p style="color: var(--text-secondary); padding: 1rem;">No impending overflows detected.</p>';
+        return;
+    }
+
+    sortedBins.forEach(bin => {
+        let stateColor = 'var(--warning)';
+        let bgStyle = 'rgba(245, 158, 11, 0.1)';
+
+        // If it's expected to overflow in 2 hours or less, mark it danger red
+        if (bin.prediction <= 2 || bin.fill > 85) {
+            stateColor = 'var(--danger)';
+            bgStyle = 'rgba(239, 68, 68, 0.1)';
+        }
+
+        const timeString = bin.prediction === 1 ? '1 hour' : `${bin.prediction} hours`;
+
+        container.innerHTML += `
+            <div style="padding: 1rem; background: ${bgStyle}; border-left: 4px solid ${stateColor}; border-radius: 4px; margin-bottom: 1rem;">
+                <strong style="color: ${stateColor};">${bin.id}</strong> <span style="color: var(--text-secondary); font-size: 0.8rem;">(Live fill: <span style="color: var(--text-primary);">${bin.fill}%</span>)</span>
+                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.2rem;">Predicted overflow in ${timeString}</p>
+            </div>
+        `;
+    });
 }
 
 // Update Data Table
@@ -176,4 +226,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (routeBtn) {
         routeBtn.addEventListener('click', generateRoute);
     }
+});
+
+// Update charts immediately once they are ready on analytics page
+document.addEventListener('chartsReady', () => {
+    updateStats();
 });

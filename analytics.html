@@ -19,8 +19,9 @@
         <ul>
             <li><a href="index.html">Home</a></li>
             <li><a href="monitoring.html">Monitoring</a></li>
-            <li><a href="analytics.html" class="active">Analytics</a></li>
             <li><a href="realtime.html">Real-Time Data</a></li>
+            <li><a href="analytics.html" class="active">Analytics</a></li>
+            <li><a href="about.html">About Us</a></li>
         </ul>
     </nav>
 
@@ -72,28 +73,8 @@
             <!-- Predicted Overflow Bins (Centered via span) -->
             <div class="chart-card" style="grid-column: 1 / -1; max-width: 800px; margin: 0 auto; width: 100%;">
                 <h3>Upcoming Overflow Predictions</h3>
-                <div style="margin-top: 1rem; flex: 1; overflow-y: auto;">
-                    <div
-                        style="padding: 1rem; background: rgba(239, 68, 68, 0.1); border-left: 4px solid var(--danger); border-radius: 4px; margin-bottom: 1rem;">
-                        <strong style="color: var(--danger);">RX-0042 (Sector 7)</strong>
-                        <p style="font-size: 0.85rem; color: var(--text-secondary);">Predicted overflow in 45 minutes
-                        </p>
-                    </div>
-                    <div
-                        style="padding: 1rem; background: rgba(245, 158, 11, 0.1); border-left: 4px solid var(--warning); border-radius: 4px; margin-bottom: 1rem;">
-                        <strong style="color: var(--warning);">RX-0128 (Rajapeth)</strong>
-                        <p style="font-size: 0.85rem; color: var(--text-secondary);">Predicted overflow in 2 hours</p>
-                    </div>
-                    <div
-                        style="padding: 1rem; background: rgba(245, 158, 11, 0.1); border-left: 4px solid var(--warning); border-radius: 4px; margin-bottom: 1rem;">
-                        <strong style="color: var(--warning);">RX-0089 (Gadge Nagar)</strong>
-                        <p style="font-size: 0.85rem; color: var(--text-secondary);">Predicted overflow in 3.5 hours</p>
-                    </div>
-                    <div
-                        style="padding: 1rem; background: rgba(245, 158, 11, 0.1); border-left: 4px solid var(--warning); border-radius: 4px;">
-                        <strong style="color: var(--warning);">RX-0215 (Badnera Rd)</strong>
-                        <p style="font-size: 0.85rem; color: var(--text-secondary);">Predicted overflow in 5 hours</p>
-                    </div>
+                <div id="predictions-container" style="margin-top: 1rem; flex: 1; overflow-y: auto;">
+                    <!-- Dynamically populated by script.js -->
                 </div>
             </div>
         </div>
@@ -113,15 +94,19 @@
         Chart.defaults.color = '#94a3b8';
         Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
 
+        // Define charts globally so script.js can update them
+        let fillLevelChart = null;
+        let wasteGenChart = null;
+
         document.addEventListener('DOMContentLoaded', () => {
             // Fill Level Distribution Chart (Doughnut)
             const fillCtx = document.getElementById('fillLevelChart').getContext('2d');
-            new Chart(fillCtx, {
+            fillLevelChart = new Chart(fillCtx, {
                 type: 'doughnut',
                 data: {
                     labels: ['Critical (>75%)', 'Medium (50-75%)', 'Low (<50%)'],
                     datasets: [{
-                        data: [5, 8, 7],
+                        data: [0, 0, 0], // Start empty, let script.js update
                         backgroundColor: ['#ef4444', '#f59e0b', '#22c55e'],
                         borderWidth: 0,
                         hoverOffset: 10
@@ -138,13 +123,13 @@
 
             // Daily Waste Generation (Line Chart)
             const wasteCtx = document.getElementById('wasteGenChart').getContext('2d');
-            new Chart(wasteCtx, {
+            wasteGenChart = new Chart(wasteCtx, {
                 type: 'line',
                 data: {
                     labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
                     datasets: [{
                         label: 'Waste Collected (Tons)',
-                        data: [12, 19, 15, 22, 18, 25, 14],
+                        data: [12, 19, 15, 22, 18, 25, 14], // Static historical data is fine here, or could be dynamic
                         borderColor: '#22c55e',
                         backgroundColor: 'rgba(34, 197, 94, 0.1)',
                         fill: true,
@@ -162,6 +147,9 @@
                     }
                 }
             });
+
+            // Dispatch custom event to notify script.js that charts are ready
+            document.dispatchEvent(new Event('chartsReady'));
         });
     </script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
