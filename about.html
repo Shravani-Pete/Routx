@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RouteX - About Us</title>
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Specific Styles for About Page */
+        .hero-about {
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 8% 4rem;
+            position: relative;
+            background: radial-gradient(circle at center, rgba(30, 41, 59, 0.5) 0%, var(--bg-deep) 100%);
+        }
+
+        .hero-about::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(6, 182, 212, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(6, 182, 212, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 0;
+            mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+        }
+
+        .hero-about h1,
+        .hero-about p {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-about h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-about p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+        }
+
+        /* Overview Section */
+        .overview {
+            display: flex;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .overview-text {
+            flex: 1;
+        }
+
+        .overview-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .overview-text p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .overview-cards {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .overview-card {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .overview-card:hover {
+            transform: translateX(-10px);
+            border-color: var(--cyan);
+            box-shadow: -10px 0 30px rgba(6, 182, 212, 0.1);
+        }
+
+        .overview-icon {
+            font-size: 2rem;
+            color: var(--cyan);
+        }
+
+        /* Team Section */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .team-card {
+            background: var(--bg-card);
+            padding: 2.5rem 2rem;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .team-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--cyan));
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .team-card:hover::before {
+            opacity: 1;
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(34, 197, 94, 0.2);
+        }
+
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #1e293b, #0f172a);
+            margin: 0 auto 1.5rem;
+            border: 2px solid var(--accent);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            color: var(--text-secondary);
+        }
+
+        .team-name {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .team-role {
+            color: var(--cyan);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .team-desc {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Tech Stack */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .tech-category {
+            background: rgba(30, 41, 59, 0.5);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .tech-category h3 {
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .tech-tag {
+            background: var(--bg-deep);
+            color: var(--text-secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Smooth Scroll Fade In Classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 968px) {
+            .overview {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="logo">RouteX</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="monitoring.html">Monitoring</a></li>
+            <li><a href="realtime.html">Real-Time Data</a></li>
+            <li><a href="analytics.html">Analytics</a></li>
+            <li><a href="about.html" class="active">About Us</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-about fade-in">
+        <h1
+            style="background: linear-gradient(to right, #fff, var(--cyan)); -webkit-background-clip: text; background-clip: text; color: transparent;">
+            About RouteX</h1>
+        <p>Building intelligent and sustainable waste management solutions through IoT, optimization algorithms, and
+            scalable architecture.</p>
+    </section>
+
+    <!-- Overview Section -->
+    <section class="section fade-in">
+        <div class="overview">
+            <div class="overview-text">
+                <h2>Transforming Urban Infrastructure</h2>
+                <p>Traditional municipal waste collection relies on static routes, leading to unnecessary fuel
+                    consumption, increased CO₂ emissions, and overflowing bins in high-density areas.</p>
+                <p><strong>RouteX</strong> was engineered to solve this inefficiency. By combining a hybrid IoT sensor
+                    network with advanced simulation models, our platform dynamically assesses waste levels across the
+                    city. The result is a highly scalable, real-time routing engine that directs trucks only where they
+                    are needed, exactly when they are needed.</p>
+            </div>
+            <div class="overview-cards">
+                <div class="overview-card">
+                    <div class="overview-icon">📡</div>
+                    <div>
+                        <h3 style="color: var(--text-primary);">Real-Time Monitoring</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">Live IoT data aggregation from
+                            ultrasonic sensors.</p>
+                    </div>
+                </div>
+                <div class="overview-card">
+                    <div class="overview-icon">🧠</div>
+                    <div>
+                        <h3 style="color: var(--text-primary);">Intelligent Routing</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">Dynamic shortest-path computation
+                            for active trucks.</p>
+                    </div>
+                </div>
+                <div class="overview-card">
+                    <div class="overview-icon">🌱</div>
+                    <div>
+                        <h3 style="color: var(--text-primary);">Sustainable Impact</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">Significant reduction in urban
+                            carbon footprint.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Meet the Team -->
+    <section class="section fade-in" style="background: var(--bg-deep);">
+        <h2 class="section-title">Meet Team RouteX</h2>
+        <div class="team-grid">
+            <!-- Om Thakare -->
+            <div class="team-card">
+                <div class="avatar">👨‍💻</div>
+                <h3 class="team-name">Om Thakare</h3>
+                <div class="team-role">Backend Architecture & Route Optimization</div>
+                <p class="team-desc">Designed the core routing engine and robust database integration for scalable data
+                    processing.</p>
+            </div>
+
+            <!-- Prachi Urgunde -->
+            <div class="team-card">
+                <div class="avatar">👩‍💻</div>
+                <h3 class="team-name">Prachi Urgunde</h3>
+                <div class="team-role">Frontend & Dashboard Development</div>
+                <p class="team-desc">Developed the premium SaaS user interface and established the real-time
+                    visualization frameworks.</p>
+            </div>
+
+            <!-- Shravani Pete -->
+            <div class="team-card">
+                <div class="avatar">👩‍💻</div>
+                <h3 class="team-name">Shravani Pete</h3>
+                <div class="team-role">Frontend & Real-Time Data Handling</div>
+                <p class="team-desc">Integrated live IoT bin updates seamlessly into the interactive mapping dashboard
+                    features.</p>
+            </div>
+
+            <!-- Aayush Sirsat -->
+            <div class="team-card">
+                <div class="avatar">👨‍💻</div>
+                <h3 class="team-name">Aayush Sirsat</h3>
+                <div class="team-role">Backend & IoT Integration</div>
+                <p class="team-desc">Developed localized sensor communication protocols and the central backend API
+                    endpoints.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Stack -->
+    <section class="section fade-in">
+        <h2 class="section-title">Technology Stack</h2>
+        <div class="tech-grid">
+            <div class="tech-category">
+                <h3>🖥️ Backend</h3>
+                <div class="tech-tags">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">Flask</span>
+                    <span class="tech-tag">PostgreSQL</span>
+                </div>
+            </div>
+            <div class="tech-category">
+                <h3>🎨 Frontend</h3>
+                <div class="tech-tags">
+                    <span class="tech-tag">HTML5 / CSS3</span>
+                    <span class="tech-tag">JavaScript / React</span>
+                    <span class="tech-tag">Leaflet.js</span>
+                    <span class="tech-tag">Chart.js</span>
+                </div>
+            </div>
+            <div class="tech-category">
+                <h3>⚙️ Hardware</h3>
+                <div class="tech-tags">
+                    <span class="tech-tag">ESP8266</span>
+                    <span class="tech-tag">HC-SR04 Ultrasonic</span>
+                    <span class="tech-tag">Arduino IDE</span>
+                </div>
+            </div>
+            <div class="tech-category">
+                <h3>📐 Algorithms</h3>
+                <div class="tech-tags">
+                    <span class="tech-tag">Nearest Neighbor</span>
+                    <span class="tech-tag">Dijkstra's Algorithm</span>
+                    <span class="tech-tag">Haversine Formula</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vision Section (Reused from Home) -->
+    <section class="section vision fade-in">
+        <div class="vision-content">
+            <h2 style="font-size: 3rem; margin-bottom: 1.5rem;">Our Vision</h2>
+            <p style="font-size: 1.25rem; color: var(--text-secondary); margin-bottom: 2rem;">
+                Looking beyond a single deployment, RouteX is designed for comprehensive smart city integration. Our
+                architecture supports multi-truck fleet optimization, AI-based waste prediction modeling, and can scale
+                seamlessly from a single municipal ward to a complete metropolitan grid.
+            </p>
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <span class="stat-no">1000+</span>
+                    <span class="stat-text">Bins Scalable</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-no">Live</span>
+                    <span class="stat-text">Real-Time Monitoring</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-no">Hybrid</span>
+                    <span class="stat-text">IoT Architecture</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-no">Green</span>
+                    <span class="stat-text">Sustainable Dev</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div>RouteX © 2026</div>
+            <div style="color: var(--accent); font-weight: 600;">HackGenX 2026 Project</div>
+            <div>Team RouteX</div>
+        </div>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.fade-in').forEach(element => {
+                observer.observe(element);
+            });
+        });
+    </script>
+</body>
+
+</html>

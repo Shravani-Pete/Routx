@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RouteX - Live Monitoring Page</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <nav>
+        <div class="logo">RouteX</div>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="monitoring.html" class="active">Monitoring</a></li>
+            <li><a href="realtime.html">Real-Time Data</a></li>
+            <li><a href="analytics.html">Analytics</a></li>
+            <li><a href="about.html">About Us</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <header style="margin-bottom: 1.5rem;">
+            <h1>📡 Live Monitoring — Amravati City</h1>
+        </header>
+
+        <div class="monitoring-container">
+            <!-- Left Side: Map -->
+            <div class="map-container">
+                <div id="map"></div>
+                <!-- Control Overlay -->
+                <div style="position: absolute; bottom: 20px; right: 20px; z-index: 1000;">
+                    <button id="generate-route" class="btn-primary"
+                        style="padding: 0.75rem 1.5rem; font-size: 0.9rem;">Generate Optimised Route</button>
+                </div>
+            </div>
+
+            <!-- Right Side: Stats Panel -->
+            <div class="stats-panel">
+                <div class="mini-card">
+                    <h4>Total Bins</h4>
+                    <div class="val" id="total-bins">1000</div>
+                </div>
+
+                <div class="mini-card">
+                    <h4>Critical Bins ( >75% )</h4>
+                    <div class="val danger-val" id="critical-count">--</div>
+                </div>
+
+                <div class="mini-card">
+                    <h4>Average Fill Level</h4>
+                    <div class="val highlight" id="avg-fill">--</div>
+                </div>
+
+                <div class="mini-card">
+                    <h4>Active Trucks</h4>
+                    <div class="val" id="active-trucks">12</div>
+                </div>
+
+                <div class="mini-card">
+                    <h4>Next Overflow Prediction</h4>
+                    <div class="val highlight" id="next-overflow">2.5 Hours</div>
+                </div>
+
+                <div class="mini-card"
+                    style="margin-top: auto; background: rgba(34, 197, 94, 0.1); border-color: var(--accent);">
+                    <p style="font-size: 0.85rem; color: var(--accent);">✔ System Online - All IoT nodes transmitting
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div>RouteX © 2026</div>
+            <div style="color: var(--accent); font-weight: 600;">HackGenX 2026 Project</div>
+            <div>Team RouteX</div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

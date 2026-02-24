@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RouteX – Smart Waste Collection & Route Optimization</title>
+    <meta name="description"
+        content="Reducing operational costs by up to 40% through real-time bin monitoring and dynamic route optimization.">
+    <link rel="stylesheet" href="home.css">
+</head>
+
+<body>
+    <nav class="glass">
+        <div class="logo">RouteX</div>
+        <ul class="nav-links">
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="monitoring.html">Monitoring</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="realtime.html">Real-Time Data</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Smart Waste Collection Powered by IoT & Intelligent Routing</h1>
+            <p>Reducing operational costs by up to 40% through real-time bin monitoring and dynamic route optimization.
+            </p>
+            <div class="cta-group">
+                <a href="dashboard.html" class="btn btn-primary">View Live Dashboard</a>
+                <a href="dashboard.html" class="btn btn-secondary">Optimize Route Now</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="smart_city_illustration.png" alt="Smart City Infrastructure" id="hero-img">
+        </div>
+    </section>
+
+    <!-- Impact Metrics Section -->
+    <section class="section">
+        <div class="section-title">
+            <p
+                style="color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1rem;">
+                Impact & Performance</p>
+            <h2 style="font-size: 2.5rem;">Driving Efficiency in Every Trip</h2>
+        </div>
+        <div class="metrics-grid">
+            <div class="metric-card glass">
+                <span class="metric-icon">🚛</span>
+                <span class="metric-value">30–40%</span>
+                <span class="metric-label">Distance Reduction</span>
+            </div>
+            <div class="metric-card glass">
+                <span class="metric-icon">⛽</span>
+                <span class="metric-value">25%</span>
+                <span class="metric-label">Fuel Savings Per Trip</span>
+            </div>
+            <div class="metric-card glass">
+                <span class="metric-icon">🌱</span>
+                <span class="metric-value">15t</span>
+                <span class="metric-label">Reduced CO₂ Emissions</span>
+            </div>
+            <div class="metric-card glass">
+                <span class="metric-icon">📡</span>
+                <span class="metric-value">100%</span>
+                <span class="metric-label">Real-Time Bin Monitoring</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- How RouteX Works Section -->
+    <section class="section" style="background: rgba(30, 41, 59, 0.3);">
+        <div class="section-title">
+            <h2 style="font-size: 2.5rem;">How RouteX Works</h2>
+            <p style="color: var(--text-secondary); margin-top: 1rem;">A seamless end-to-end intelligence cycle</p>
+        </div>
+        <div class="steps-container">
+            <div class="step-arrow arrow-1"></div>
+            <div class="step-item">
+                <div class="step-icon">📡</div>
+                <h3>IoT Bin Monitoring</h3>
+                <p>Ultrasonic sensors send real-time fill data to our central cloud hub.</p>
+            </div>
+            <div class="step-arrow arrow-2"></div>
+            <div class="step-item">
+                <div class="step-icon">🧠</div>
+                <h3>Intelligent Selection</h3>
+                <p>System filters high-priority bins using advanced threshold logic.</p>
+            </div>
+            <div class="step-item">
+                <div class="step-icon">🗺</div>
+                <h3>Dynamic Route Optimization</h3>
+                <p>Shortest path computed to minimize fuel, distance, and time.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Smart City Vision Section -->
+    <section class="section vision">
+        <div class="vision-content">
+            <h2 style="font-size: 3rem; margin-bottom: 1.5rem;">Transforming Waste Management into a Smart
+                Infrastructure</h2>
+            <p>RouteX is building the foundation for sustainable urban living. By integrating IoT and AI, we turn static
+                waste routes into dynamic, data-driven operations that scale with your city.</p>
+
+            <div class="stats-bar glass">
+                <div class="stat-item">
+                    <span class="stat-no">1000+</span>
+                    <span class="stat-text">Bins Supported</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-no">Live</span>
+                    <span class="stat-text">Real-Time Updates</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-no">Hybrid</span>
+                    <span class="stat-text">Scalable Architecture</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div>RouteX © 2026</div>
+            <div style="color: var(--accent); font-weight: 600;">HackGenX 2026 Project</div>
+            <div>Team RouteX</div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple animation trigger for metric cards and counters
+        document.addEventListener('DOMContentLoaded', () => {
+            const animateValue = (obj, start, end, duration) => {
+                let startTimestamp = null;
+                const step = (timestamp) => {
+                    if (!startTimestamp) startTimestamp = timestamp;
+                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                    const current = Math.floor(progress * (end - start) + start);
+                    obj.innerHTML = obj.dataset.suffix ? current + obj.dataset.suffix : current;
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    }
+                };
+                window.requestAnimationFrame(step);
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-in');
+
+                        // If it has a counter value, animate it
+                        const valueDisplay = entry.target.querySelector('.metric-value');
+                        if (valueDisplay && !valueDisplay.dataset.animated) {
+                            const rawValue = valueDisplay.innerText;
+                            const match = rawValue.match(/(\d+)/);
+                            if (match) {
+                                const endValue = parseInt(match[0]);
+                                const suffix = rawValue.replace(match[0], '');
+                                valueDisplay.dataset.suffix = suffix;
+                                animateValue(valueDisplay, 0, endValue, 2000);
+                                valueDisplay.dataset.animated = "true";
+                            }
+                        }
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.metric-card').forEach(card => {
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+
+</html>
